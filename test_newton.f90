@@ -9,21 +9,18 @@ program test_newton
     integer                :: max_iter, info, unit, lin_method
     real(dp)               :: norm_f
 
-    ! Начальное приближение (немного отклоняемся от решения)
     x0 = [2.1_dp, 1.1_dp]
     tol = 1.0e-12_dp
     max_iter = 100
-    lin_method = 1   ! Гаусс с полным выбором
+    lin_method = 1   !Гаусс с полным выбором
 
     call newton(my_f, x0, max_iter, tol, x, info, lin_method)
 
     write(*, '(A, I0)') 'Статус завершения: ', info
-    norm_f = norm2(my_f(x))
+    norm_f = vecnorm2(my_f(x))
     write(*, '(A, ES15.7)') 'Норма F(X): ', norm_f
     write(*, '(A)') 'Найденное решение X:'
     write(*, '(2ES15.7)') x
-    write(*, '(A)') 'Точное решение (2.0, 1.0):'
-    write(*, '(2F15.7)') 2.0_dp, 1.0_dp
 
     open(newunit=unit, file='result.dat', status='replace', action='write')
     write(unit, '(ES25.16)') x
